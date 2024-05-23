@@ -10,13 +10,17 @@ def ui_get_choices() -> list:
     default_llm = 'llama3'
     llm_column = sg.Column([
         [sg.Text("Select LLM to use:")],
-        [sg.Combo(supported_llms, key='-LLM-', readonly=True, default_value=default_llm)],
-        [sg.Button("Submit")]
+        [sg.Combo(supported_llms, key='-LLM-', readonly=True, default_value=default_llm)]
     ])
+
+    options_column = sg.Column([
+        [sg.Button("Submit")]
+    ], element_justification='center', expand_x=True)
 
     layout = [
         [data_column,
-        llm_column]
+        llm_column],
+        [options_column]
     ]
 
     window_title = 'Load folder'
@@ -42,5 +46,6 @@ def ui_get_choices() -> list:
 
 if __name__ == '__main__':
     choices = ui_get_choices()
-    print('Chosen folder is: ', choices[0])
-    print('Chosen LLM is: ', choices[1])
+    if any(choices):
+        print('Chosen folder is: ', choices[0])
+        print('Chosen LLM is: ', choices[1])
