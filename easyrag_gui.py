@@ -1,3 +1,4 @@
+import os
 import PySimpleGUI as sg
 
 sg.set_options(font=("Arial Bold", 16))
@@ -9,12 +10,12 @@ def ui_get_options() -> dict:
             [sg.Text("Select folder with documents:")],
             [
                 sg.In(size=(25, 1), enable_events=True, key="-DATA_FOLDER-"),
-                sg.FolderBrowse(),
+                sg.FolderBrowse(initial_folder=os.getcwd()),
             ],
             [sg.Text("Select target folder for RAG data:")],
             [
                 sg.In(size=(25, 1), enable_events=True, key="-RAG_FOLDER-"),
-                sg.FolderBrowse(),
+                sg.FolderBrowse(initial_folder=os.getcwd()),
             ],
         ]
     )
