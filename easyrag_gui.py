@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 
-def ui_get_choices() -> list:
+def ui_get_choices() -> dict:
     data_column = sg.Column([
         [sg.Text("Select folder with documents:")],
         [sg.In(size=(25,1), enable_events=True ,key='-FOLDER-'), sg.FolderBrowse()]
@@ -26,26 +26,27 @@ def ui_get_choices() -> list:
     window_title = 'Load folder'
     window = sg.Window(window_title, layout)
 
-    choices_submitted = False
+    options_submitted = False
+    options = {}
     while True:
         event, values = window.read()
 
         if event == sg.WIN_CLOSED:
-            if not choices_submitted:
-                print("Window closed without submitting preferences!")
-                data_folder = None
-                llm = None
+            if not options_submitted:
+                print("Window closed without submitting options!")
             break
         elif event == "Submit":
-            choices_submitted = True
-            data_folder = values['-FOLDER-']
-            llm = values['-LLM-']
+            options_submitted = True
+            options['data_folder'] = values['-FOLDER-']
+            options['llm'] = values['-LLM-']
 
     window.close()
-    return [data_folder, llm]
+    return options
 
 if __name__ == '__main__':
-    choices = ui_get_choices()
-    if any(choices):
-        print('Chosen folder is: ', choices[0])
-        print('Chosen LLM is: ', choices[1])
+    options = ui_get_choices()
+    if all(value for value in options.values()):
+        print('Chosen folder is: ', options['data_folder'])
+        print('Chosen LLM is: ', options['llm'])
+    else:
+        print('Some options are missing in the user choices!')
