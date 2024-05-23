@@ -117,8 +117,9 @@ def ui_get_query():
 
 
 def ui_print(text_to_print, window_title="Print text"):
-    layout = [[sg.Text(text_to_print)]]
-    window = sg.Window(window_title, layout)
+    layout = [[sg.Multiline(write_only=True, size=(60, 10), reroute_cprint=True)]]
+    window = sg.Window(window_title, layout, finalize=True)
+    sg.cprint(text_to_print)
 
     while True:
         event, values = window.read()
