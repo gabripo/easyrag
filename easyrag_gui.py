@@ -13,8 +13,8 @@ def ui_get_options() -> dict:
     llm_column = sg.Column([
         [sg.Text("Select LLM to use:")],
         [sg.Combo(supported_llms, key='-LLM-', readonly=True, default_value=default_llm)],
-        [sg.Text("User prompt:")],
-        [sg.Multiline(size=(25,4), key='-USER_PROMPT-')]
+        [sg.Text("System prompt:")],
+        [sg.Multiline(default_text='You got some documents.\nReply to questions concerning them.', size=(25,4), key='-SYS_PROMPT-')]
     ])
 
     options_column = sg.Column([
@@ -41,7 +41,7 @@ def ui_get_options() -> dict:
             user_options['data_folder'] = values['-DATA_FOLDER-']
             user_options['llm'] = values['-LLM-']
             user_options['rag_folder'] = values['-RAG_FOLDER-']
-            user_options['user_prompt'] = values['-USER_PROMPT-']
+            user_options['system_prompt'] = values['-SYS_PROMPT-']
             break
 
     window.close()
@@ -52,7 +52,7 @@ def ui_check_options(user_options={}) -> bool:
         print('Selected data folder is: ', user_options['data_folder'])
         print('Selected target folder for RAG data is: ', user_options['rag_folder'])
         print('Selected LLM is: ', user_options['llm'])
-        print('User prompt is: ', user_options['user_prompt'])
+        print('System prompt is: ', user_options['system_prompt'])
     else:
         print('Some user-specified options are missing!')
 
