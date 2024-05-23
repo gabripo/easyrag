@@ -2,6 +2,7 @@ import os
 import PySimpleGUI as sg
 
 sg.set_options(font=("Arial Bold", 16))
+rag_folder_name = "chroma_data"
 
 
 def ui_get_options() -> dict:
@@ -10,11 +11,6 @@ def ui_get_options() -> dict:
             [sg.Text("Select folder with documents:")],
             [
                 sg.In(size=(25, 1), enable_events=True, key="-DATA_FOLDER-"),
-                sg.FolderBrowse(initial_folder=os.getcwd()),
-            ],
-            [sg.Text("Select target folder for RAG data:")],
-            [
-                sg.In(size=(25, 1), enable_events=True, key="-RAG_FOLDER-"),
                 sg.FolderBrowse(initial_folder=os.getcwd()),
             ],
         ]
@@ -64,7 +60,9 @@ def ui_get_options() -> dict:
             options_submitted = True
             user_options["data_folder"] = values["-DATA_FOLDER-"]
             user_options["llm"] = values["-LLM-"]
-            user_options["rag_folder"] = values["-RAG_FOLDER-"]
+            user_options["rag_folder"] = os.path.join(
+                user_options["data_folder"], rag_folder_name
+            )
             user_options["system_prompt"] = values["-SYS_PROMPT-"]
             break
 
