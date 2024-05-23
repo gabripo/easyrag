@@ -1,31 +1,54 @@
 import PySimpleGUI as sg
 
+sg.set_options(font=("Arial Bold", 16))
+
+
 def ui_get_options() -> dict:
-    data_column = sg.Column([
-        [sg.Text("Select folder with documents:")],
-        [sg.In(size=(25,1), enable_events=True, key='-DATA_FOLDER-'), sg.FolderBrowse()],
-        [sg.Text("Select target folder for RAG data:")],
-        [sg.In(size=(25,1), enable_events=True, key='-RAG_FOLDER-'), sg.FolderBrowse()],
-    ])
+    data_column = sg.Column(
+        [
+            [sg.Text("Select folder with documents:")],
+            [
+                sg.In(size=(25, 1), enable_events=True, key="-DATA_FOLDER-"),
+                sg.FolderBrowse(),
+            ],
+            [sg.Text("Select target folder for RAG data:")],
+            [
+                sg.In(size=(25, 1), enable_events=True, key="-RAG_FOLDER-"),
+                sg.FolderBrowse(),
+            ],
+        ]
+    )
 
-    supported_llms = ['llama3']
-    default_llm = 'llama3'
-    llm_column = sg.Column([
-        [sg.Text("Select LLM to use:")],
-        [sg.Combo(supported_llms, key='-LLM-', readonly=True, default_value=default_llm)],
-        [sg.Text("System prompt:")],
-        [sg.Multiline(default_text='You got some documents.\nReply to questions concerning them.', size=(25,4), key='-SYS_PROMPT-')]
-    ])
+    supported_llms = ["llama3"]
+    default_llm = "llama3"
+    llm_column = sg.Column(
+        [
+            [sg.Text("Select LLM to use:")],
+            [
+                sg.Combo(
+                    supported_llms,
+                    key="-LLM-",
+                    readonly=True,
+                    default_value=default_llm,
+                )
+            ],
+            [sg.Text("System prompt:")],
+            [
+                sg.Multiline(
+                    default_text="You got some documents.\nReply to questions concerning them.",
+                    size=(25, 4),
+                    key="-SYS_PROMPT-",
+                )
+            ],
+        ]
+    )
 
-    options_column = sg.Column([
-        [sg.Button("Submit")]
-    ], element_justification='center', expand_x=True)
+    options_column = sg.Column(
+        [[sg.Button("Submit")]], element_justification="center", expand_x=True
+    )
 
-    layout = [
-        [data_column, llm_column],
-        [options_column]
-    ]
-    window_title = 'RAG options'
+    layout = [[data_column, llm_column], [options_column]]
+    window_title = "RAG options"
     window = sg.Window(window_title, layout)
 
     options_submitted = False
@@ -38,24 +61,98 @@ def ui_get_options() -> dict:
             break
         elif event == "Submit":
             options_submitted = True
-            user_options['data_folder'] = values['-DATA_FOLDER-']
-            user_options['llm'] = values['-LLM-']
-            user_options['rag_folder'] = values['-RAG_FOLDER-']
-            user_options['system_prompt'] = values['-SYS_PROMPT-']
+            user_options["data_folder"] = values["-DATA_FOLDER-"]
+            user_options["llm"] = values["-LLM-"]
+            user_options["rag_folder"] = values["-RAG_FOLDER-"]
+            user_options["system_prompt"] = values["-SYS_PROMPT-"]
             break
 
     window.close()
     return user_options
 
-def ui_check_options(user_options={}) -> bool:
-    if user_options and all(value for value in user_options.values()):
-        print('Selected data folder is: ', user_options['data_folder'])
-        print('Selected target folder for RAG data is: ', user_options['rag_folder'])
-        print('Selected LLM is: ', user_options['llm'])
-        print('System prompt is: ', user_options['system_prompt'])
-    else:
-        print('Some user-specified options are missing!')
 
-if __name__ == '__main__':
-    user_options = ui_get_options()
-    ui_check_options(user_options)
+def ui_check_options(user_options={}) -> bool:
+    required_options = ["data_folder", "rag_folder", "llm", "system_prompt"]
+    if (
+        user_options
+        and all(value for value in user_options.values())
+        and all(k in user_options for k in required_options)
+    ):
+        print("Selected data folder is: ", user_options["data_folder"])
+        print("Selected target folder for RAG data is: ", user_options["rag_folder"])
+        print("Selected LLM is: ", user_options["llm"])
+        print("System prompt is: ", user_options["system_prompt"])
+        return True
+    else:
+        print("Some user-specified options are missing!")
+        return False
+
+
+def ui_get_query():
+    layout = [
+        [sg.Text("User prompt:")],
+        [
+            sg.Multiline(
+                default_text="Summarize the content of the documents.",
+                size=(25, 4),
+                key="-USR_PROMPT-",
+            )
+        ],
+        [sg.Button("Submit")],
+    ]
+    window_title = "Query"
+    window = sg.Window(window_title, layout)
+
+    user_query = ""
+    while True:
+        event, values = window.read()
+        if event == sg.WIN_CLOSED:
+            break
+        elif event == "Submit":
+            user_query = values["-USR_PROMPT-"]
+            break
+
+    window.close()
+    return user_query
+
+
+def ui_print(text_to_print, window_title="Print text"):
+    layout = [[sg.Text(text_to_print)]]
+    window = sg.Window(window_title, layout)
+
+    while True:
+        event, values = window.read()
+        if event == sg.WIN_CLOSED:
+            break
+
+    window.close()
+    pass
+
+
+def ui_yes_no(window_text="Continue?") -> bool:
+    layout = [[sg.Text(window_text)], [sg.Button("Yes"), sg.Button("No")]]
+    window_title = "User action required"
+    window = sg.Window(window_title, layout)
+
+    user_choice = False
+    while True:
+        event, values = window.read()
+        if event == sg.WIN_CLOSED or event == "No":
+            user_choice = False
+            break
+        if event == "Yes":
+            user_choice = True
+            break
+
+    window.close()
+    return user_choice
+
+
+if __name__ == "__main__":
+    while True:
+        user_options = ui_get_options()
+        ui_check_options(user_options)
+        user_query = ui_get_query()
+        ui_print(user_query)
+        if not ui_yes_no():
+            break
