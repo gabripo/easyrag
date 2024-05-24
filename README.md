@@ -5,7 +5,7 @@ _Easyrag_ is a small tool to perform a RAG (Retrieval-Augmented Generation) over
 
 ## Typical use case
 1. I have big, boring, important documents stored on my PC.
-2. I do not want to give these documents away, like to an online service.
+2. I do not want to give these documents away.
 3. ... yet I am not willing to waste hours reading the documents.
 4. Then I give these documents to _Easyrag_ !
 5. _Easyrag_ will process the documents, without being bored.
@@ -13,9 +13,11 @@ _Easyrag_ is a small tool to perform a RAG (Retrieval-Augmented Generation) over
 7. I am happy: I saved a lot of time!
 
 ## Installation
-1. Install Python - https://www.python.org/downloads/
-2. Install conda - please refer to the official website https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html
-3. By using a shell, create a conda environment by using the provided dependencies:
+1. Install Ollama - https://ollama.com/
+2. Download the Meta AI llama3 model: `ollama run llama3`
+3. Install Python - https://www.python.org/downloads/
+4. Install conda - please refer to the official website https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html
+5. By using a shell, create a conda environment by using the provided dependencies:
 ```
 conda env create -f dependencies/environment.yml -n easyrag
 ```
