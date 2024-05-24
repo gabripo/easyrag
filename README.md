@@ -14,7 +14,7 @@ _Easyrag_ is a small tool to perform a RAG (Retrieval-Augmented Generation) over
 
 ## Installation
 1. Install Ollama - https://ollama.com/
-2. Download the Meta AI llama3 model: `ollama run llama3`
+2. Download the Meta AI llama3 model: `ollama download llama3-8b`
 3. Install Python - https://www.python.org/downloads/
 4. Install conda - please refer to the official website https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html
 5. By using a shell, create a conda environment by using the provided dependencies:
