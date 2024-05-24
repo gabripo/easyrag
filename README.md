@@ -45,7 +45,7 @@ python main.py
 - ![Screenshot 2024-05-23 at 21 29 29](https://github.com/gabripo/easyrag/assets/25492636/0f5a8000-cc73-4503-bf7a-47f385ecf614)
 
 ## Current status and limitations
-1. Only the llama3 ( https://ollama.com/library/llama3 ) model is currently supported. It means everything runs offline! Other models may come in the future - if I will get more spare time.
+1. Only the llama3 ( https://ollama.com/library/llama3 ) model is currently supported. It means everything can run offline on your machine! Other models may come in the future - if I will get more spare time.
 2. As Ollama runs on Linux / MacOS only, Windows is not supported - no problem since you are a Geek, right?
 3. Be patient at the first analysis of the documents: _Easyrag_ has to go through all the documents, let it read!
 4. If the documents have been already analyzed, then the following queries after the first one are faster (TLDR: the Chroma database is loaded and not re-generated)
