@@ -7,6 +7,7 @@ from langchain_core.output_parsers import StrOutputParser
 
 def get_llm_response(query, user_options={}):
     if os.path.exists(user_options["rag_folder"]):
+        print("Using already available database at path " + user_options["rag_folder"])
         vector_db = database_manager.load_database_from_folder(
             db_folder_path=user_options["rag_folder"], model_name=user_options["llm"]
         )
