@@ -14,7 +14,7 @@ _Easyrag_ is a small tool to perform a RAG (Retrieval-Augmented Generation) over
 
 ## Installation
 1. Install Ollama - https://ollama.com/
-2. Download the Meta AI llama3 model: `ollama run llama3`
+2. Download the Meta AI llama3 model: `ollama download llama3-8b`
 3. Install Python - https://www.python.org/downloads/
 4. Install conda - please refer to the official website https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html
 5. By using a shell, create a conda environment by using the provided dependencies:
@@ -45,7 +45,7 @@ python main.py
 - ![Screenshot 2024-05-23 at 21 29 29](https://github.com/gabripo/easyrag/assets/25492636/0f5a8000-cc73-4503-bf7a-47f385ecf614)
 
 ## Current status and limitations
-1. Only the llama3 ( https://ollama.com/library/llama3 ) model is currently supported. It means everything runs offline! Other models may come in the future - if I will get more spare time.
+1. Only the llama3 ( https://ollama.com/library/llama3 ) model is currently supported. It means everything can run offline on your machine! Other models may come in the future - if I will get more spare time.
 2. As Ollama runs on Linux / MacOS only, Windows is not supported - no problem since you are a Geek, right?
 3. Be patient at the first analysis of the documents: _Easyrag_ has to go through all the documents, let it read!
 4. If the documents have been already analyzed, then the following queries after the first one are faster (TLDR: the Chroma database is loaded and not re-generated)
