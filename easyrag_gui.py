@@ -41,7 +41,14 @@ def ui_get_options() -> dict:
     )
 
     options_column = sg.Column(
-        [[sg.Button("Submit")]], element_justification="center", expand_x=True
+        [
+            [
+                sg.Button("Submit"),
+                sg.Checkbox("Use web interface", default=False, key="-USE_WEB-"),
+            ]
+        ],
+        element_justification="center",
+        expand_x=True,
     )
 
     layout = [[data_column, llm_column], [options_column]]
@@ -64,6 +71,7 @@ def ui_get_options() -> dict:
                 user_options["data_folder"], rag_folder_name
             )
             user_options["system_prompt"] = values["-SYS_PROMPT-"]
+            user_options["use_web_interface"] = values["-USE_WEB-"]
             break
 
     window.close()
@@ -71,7 +79,13 @@ def ui_get_options() -> dict:
 
 
 def ui_check_options(user_options={}) -> bool:
-    required_options = ["data_folder", "rag_folder", "llm", "system_prompt"]
+    required_options = [
+        "data_folder",
+        "rag_folder",
+        "llm",
+        "system_prompt",
+        "use_web_interface",
+    ]
     if (
         user_options
         and all(value for value in user_options.values())
@@ -81,6 +95,7 @@ def ui_check_options(user_options={}) -> bool:
         print("Selected target folder for RAG data is: ", user_options["rag_folder"])
         print("Selected LLM is: ", user_options["llm"])
         print("System prompt is: ", user_options["system_prompt"])
+        print("Will the web interface be used? ", user_options["use_web_interface"])
         return True
     else:
         print("Some user-specified options are missing!")

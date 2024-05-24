@@ -1,15 +1,12 @@
 import streamlit as st
 import llm_interface
 import easyrag_gui
-import sys
 
-# TODO: pass the LLM user options to streamlit
-# user_options = easyrag_gui.ui_get_options()
 user_options = {}
-
-if not easyrag_gui.ui_check_options(user_options):
-    print("Invalid user options!")
-    pass
+user_options["data_folder"] = st.secrets["data_folder"]
+user_options["llm"] = st.secrets["llm"]
+user_options["rag_folder"] = st.secrets["rag_folder"]
+user_options["system_prompt"] = st.secrets["system_prompt"]
 
 st.set_page_config(page_title="Local RAG", page_icon=":robot")
 st.header("Analyze local documents")
