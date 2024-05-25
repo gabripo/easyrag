@@ -45,8 +45,8 @@ python main.py
     - After closing the window, it is possible to provide _Easyrag_ with other queries by clicking on the "Yes" button. To abort, click on the "No" button, instead.
     - ![Screenshot 2024-05-23 at 21 29 29](https://github.com/gabripo/easyrag/assets/25492636/0f5a8000-cc73-4503-bf7a-47f385ecf614)
 5. Tick the "Use web interface" and click on the "Submit" button to use the web interface (please note that this functionality requires streamlit to be installed!):
-    - A web interface with your web browser will start: provide it with one query and click on the "Submit Query" button to get the answer.
-    - ![Screenshot 2024-05-24 at 16 13 55](https://github.com/gabripo/easyrag/assets/25492636/fa0b45b8-674b-468a-88c2-4117fc4b56e9)
+    - A web interface with your web browser will start: provide it with one query and press "Enter" to submit a question.
+    - ![Screenshot 2024-05-25 at 10 45 45](https://github.com/gabripo/easyrag/assets/25492636/7928f505-3c5e-406f-8e94-8c181a296551)
     - To stop submitting queries, click "Yes" in the window that pops up.
     - ![Screenshot 2024-05-24 at 16 16 54](https://github.com/gabripo/easyrag/assets/25492636/c2c09abf-5376-4970-898f-c72a23d24e0c)
 
