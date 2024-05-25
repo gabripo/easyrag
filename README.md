@@ -36,12 +36,14 @@ python main.py
   - ![Screenshot 2024-05-24 at 16 06 35](https://github.com/gabripo/easyrag/assets/25492636/bad5c7f7-4a01-4a4a-b906-1d48e9036d8f)
   - Select the folder with documents by using the _Browse_ button.
   - Edit the _System prompt_ as you wish: it will be the preamble for all your following queries - you can ask _Easyrag_ to behave as a scientist, as a teacher, as your cousin, ...
-4. Tick the "Use web interface" and click on the "Submit" button to use the web interface (please note that this functionality requires streamlit to be installed!):
+### Chatbot in the browser - requires streamlit
+Tick the "Use web interface" and click on the "Submit" button to use the web interface (please note that this functionality requires streamlit to be installed!):
   - A web interface with your web browser will start: provide it with one query and press "Enter" to submit a question.
   - ![Screenshot 2024-05-25 at 10 45 45](https://github.com/gabripo/easyrag/assets/25492636/7928f505-3c5e-406f-8e94-8c181a296551)
   - To stop submitting queries, click "Yes" in the window that pops up.
   - ![Screenshot 2024-05-24 at 16 16 54](https://github.com/gabripo/easyrag/assets/25492636/c2c09abf-5376-4970-898f-c72a23d24e0c)
-5. Click on the "Submit" button without ticking "Use web interface" to proceed using the GUI for queries and answers:
+### Queries using the GUI
+Click on the "Submit" button without ticking "Use web interface" to proceed using the GUI for queries and answers:
   - Edit the text to talk to _Easyrag_ .
   - ![Screenshot 2024-05-23 at 21 24 00](https://github.com/gabripo/easyrag/assets/25492636/7109ebd1-6817-484d-bd36-9b46d40e32ff)
   - Confirm with the "Submit" button to let _Easyrag_ process the documents.
