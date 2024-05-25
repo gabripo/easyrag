@@ -9,7 +9,7 @@ if __name__ == "__main__":
 
     if easyrag_gui.ui_check_options(user_options) and user_options["use_web_interface"]:
         streamlit_settings.write_streamlit_secrets(user_options)
-        streamlit_script = "web_interface.py"
+        streamlit_script = "web_interface_chat.py"
         streamlit_cmd = "streamlit run " + streamlit_script
         streamlit_pid = process_handler.execute_command_and_get_pid(streamlit_cmd)
 

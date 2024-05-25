@@ -44,7 +44,7 @@ def ui_get_options() -> dict:
         [
             [
                 sg.Button("Submit"),
-                sg.Checkbox("Use web interface", default=False, key="-USE_WEB-"),
+                sg.Checkbox("Use web interface", default=True, key="-USE_WEB-"),
             ]
         ],
         element_justification="center",
