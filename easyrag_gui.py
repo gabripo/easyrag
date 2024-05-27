@@ -72,6 +72,7 @@ def ui_get_options() -> dict:
             )
             user_options["system_prompt"] = values["-SYS_PROMPT-"]
             user_options["use_web_interface"] = values["-USE_WEB-"]
+            user_options["consider_history"] = True  # hardcoded
             break
 
     window.close()
@@ -85,17 +86,18 @@ def ui_check_options(user_options={}) -> bool:
         "llm",
         "system_prompt",
         "use_web_interface",
+        "consider_history",
     ]
-    if (
-        user_options
-        and all(value for value in user_options.values())
-        and all(k in user_options for k in required_options)
-    ):
+    if user_options and all(k in user_options for k in required_options):
         print("Selected data folder is: ", user_options["data_folder"])
         print("Selected target folder for RAG data is: ", user_options["rag_folder"])
         print("Selected LLM is: ", user_options["llm"])
         print("System prompt is: ", user_options["system_prompt"])
         print("Will the web interface be used? ", user_options["use_web_interface"])
+        print(
+            "Will the chatbot consider the history of messages?",
+            user_options["consider_history"],
+        )
         return True
     else:
         print("Some user-specified options are missing!")

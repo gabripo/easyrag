@@ -3,10 +3,14 @@ from langchain.prompts import (
     SystemMessagePromptTemplate,
     HumanMessagePromptTemplate,
     ChatPromptTemplate,
+    MessagesPlaceholder,
 )
 from langchain_community.llms import Ollama
+from langchain.chains import create_history_aware_retriever, create_retrieval_chain
+from langchain.chains.combine_documents import create_stuff_documents_chain
 
-def compose_llm_prompt(sys_prompt='') -> ChatPromptTemplate:
+
+def compose_llm_prompt(sys_prompt="") -> ChatPromptTemplate:
     template_str_sys_prompt = sys_prompt + """\n{context}"""
     template_sys_prompt = SystemMessagePromptTemplate(
         prompt=PromptTemplate(
@@ -27,13 +31,54 @@ def compose_llm_prompt(sys_prompt='') -> ChatPromptTemplate:
     )
     return llm_prompt
 
-def load_chat_model(model_name='llama3'):
+
+def load_chat_model(model_name="llama3"):
     if not model_name:
         print("Empty model to load!")
         pass
-    elif model_name != 'llama3':
+    elif model_name != "llama3":
         print("Unsupported model " + model_name)
         pass
     # TODO: Support multiple models
     chat_model = Ollama(model=model_name)
     return chat_model
+
+
+"""Additional functions to have model calls which consider chat history"""
+
+
+def contextualize_system_prompt(llm, retriever):
+    contextualize_q_system_prompt = """Given a chat history and the latest user question \
+    which might reference context in the chat history, formulate a standalone question \
+    which can be understood without the chat history. Do NOT answer the question, \
+    just reformulate it if needed and otherwise return it as is."""
+    contextualize_q_prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", contextualize_q_system_prompt),
+            MessagesPlaceholder("chat_history"),
+            ("human", "{input}"),
+        ]
+    )
+    history_aware_retriever = create_history_aware_retriever(
+        llm, retriever, contextualize_q_prompt
+    )
+    return history_aware_retriever
+
+
+def create_question_answer_chain(llm, sys_prompt=""):
+    qa_system_prompt = sys_prompt + """\n{context}"""
+    qa_prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", qa_system_prompt),
+            MessagesPlaceholder("chat_history"),
+            ("human", "{input}"),
+        ]
+    )
+
+    question_answer_chain = create_stuff_documents_chain(llm, qa_prompt)
+    return question_answer_chain
+
+
+def create_rag_chain(history_aware_retriever, question_answer_chain):
+    rag_chain = create_retrieval_chain(history_aware_retriever, question_answer_chain)
+    return rag_chain
