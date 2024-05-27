@@ -61,6 +61,7 @@ Click on the "Submit" button without ticking "Use web interface" to proceed usin
 4. If the documents have been already analyzed, then the following queries after the first one are faster (TLDR: the Chroma database is loaded and not re-generated).
 5. Only `.pdf` documents are supported. `.xls` and other spreadsheet files may come soon...
 6. The GUI is not the best on earth, I know... I used `pysimplegui` to have more free time to develop the backend.
+7. The prompts after the very first one consider the entire history of messages - the previous queries and answers.
 
 # Contacts
 1. Do you want to contact me about collaborations? Write me to gabriele.giardino.ing@gmail.com
