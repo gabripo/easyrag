@@ -16,17 +16,19 @@ _Easyrag_ is a small tool to perform a RAG (Retrieval-Augmented Generation) over
 1. Install Ollama - https://ollama.com/
 2. Download the Meta AI llama3 model (8b-parameter version used in this guide): `ollama download llama3-8b`
 3. Install Python - https://www.python.org/downloads/
-4. Install conda - please refer to the official website https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html
-5. By using a shell, create a conda environment by using the provided dependencies:
+4. By using a shell, create a Python Virtual Environment and install the dependencies:
 ```
-conda env create -f dependencies/environment.yml -n easyrag
+pip install virtualenv
+virtualenv easyrag_venv
+source easyrag_venv/bin/activate
+pip install -r dependencies/requirements.txt
 ```
-6. To use the web interface, install streamlit - https://docs.streamlit.io/get-started/installation
+5. To use the web interface, install streamlit - https://docs.streamlit.io/get-started/installation
 
 ## Usage
-1. Activate the just created conda environment:
+1. Activate the Python Virtual Environment:
 ```
-conda activate easyrag
+source easyrag_venv/bin/activate
 ```
 2. By using Python, run the `main.py` file:
 ```
