@@ -13,4 +13,4 @@ COPY ollama_start.sh /usr/local/bin/ollama_start.sh
 # provide the ollama preparation script with run privileges
 RUN chmod +x /usr/local/bin/ollama_start.sh
 
-# ENTRYPOINT ["/usr/local/bin/ollama_start.sh"]
+RUN sh /usr/local/bin/ollama_start.sh
