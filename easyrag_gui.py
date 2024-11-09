@@ -16,7 +16,7 @@ def ui_get_options() -> dict:
         ]
     )
 
-    supported_llms = ["llama3"]
+    supported_llms = ["llama3", "llama3.2"]
     default_llm = "llama3"
     llm_column = sg.Column(
         [
@@ -68,7 +68,7 @@ def ui_get_options() -> dict:
             user_options["data_folder"] = values["-DATA_FOLDER-"]
             user_options["llm"] = values["-LLM-"]
             user_options["rag_folder"] = os.path.join(
-                user_options["data_folder"], rag_folder_name
+                user_options["data_folder"], rag_folder_name + "_" + user_options["llm"]
             )
             user_options["system_prompt"] = values["-SYS_PROMPT-"]
             user_options["use_web_interface"] = values["-USE_WEB-"]

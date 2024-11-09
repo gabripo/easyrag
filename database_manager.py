@@ -12,13 +12,13 @@ def build_database(
     if not docs_path:
         print("Unspecified documents path!")
         pass
-    if model_name == "llama3":
+    if model_name == "llama3" or model_name == "llama3.2":
         embedding_model_function = OllamaEmbeddings(model=model_name)
     else:
         print("Unsupported model " + model_name)
         pass
     if not db_folder_path:
-        db_folder_path = os.path.join(docs_path, "chroma_data")
+        db_folder_path = os.path.join(docs_path, f"chroma_data_{model_name}")
 
     data = []
     for file in os.listdir(docs_path):
@@ -43,7 +43,10 @@ def build_database(
     )
 
     if persistent_db:
-        vector_db.persist()
+        try:
+            vector_db.persist()
+        except:
+            print("Impossible to have a persistent Chroma Vectorstore")
     return vector_db
 
 
@@ -54,7 +57,7 @@ def load_database_from_folder(db_folder_path="", model_name="llama3") -> Chroma:
     elif not os.path.exists(db_folder_path):
         print("Folder " + db_folder_path + "does not exist!")
         pass
-    if model_name == "llama3":
+    if model_name == "llama3" or model_name == "llama3.2":
         embedding_model_function = OllamaEmbeddings(model=model_name)
     else:
         print("Unsupported model " + model_name)
