@@ -1,6 +1,8 @@
 import os
 import chromadb
-from langchain_chroma import Chroma
+
+# from langchain_chroma import Chroma # version of Chroma in langchain_chroma not yet compatible with the current langchain version! using Chroma implementation in langchain_community.vectorstores instead.
+from langchain_community.vectorstores import Chroma
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_ollama import OllamaEmbeddings
