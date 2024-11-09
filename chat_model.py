@@ -5,7 +5,7 @@ from langchain.prompts import (
     ChatPromptTemplate,
     MessagesPlaceholder,
 )
-from langchain_community.llms import Ollama
+from langchain_ollama import OllamaLLM
 from langchain.chains import create_history_aware_retriever, create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 
@@ -40,7 +40,7 @@ def load_chat_model(model_name="llama3"):
         print("Unsupported model " + model_name)
         pass
     # TODO: Support multiple models
-    chat_model = Ollama(model=model_name)
+    chat_model = OllamaLLM(model=model_name)
     return chat_model
 
 
