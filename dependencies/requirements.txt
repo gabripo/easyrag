@@ -48,12 +48,12 @@ jsonpointer==3.0.0
 jsonschema==4.23.0
 jsonschema-specifications==2024.10.1
 kubernetes==31.0.0
-langchain==0.3.7
+langchain==0.1.20
 langchain-chroma==0.1.4
-langchain-community==0.3.5
-langchain-core==0.3.15
+langchain-community==0.0.38
+langchain-core==0.1.53
 langchain-ollama==0.2.0
-langchain-text-splitters==0.3.2
+langchain-text-splitters==0.0.2
 langsmith==0.1.142
 markdown-it-py==3.0.0
 MarkupSafe==3.0.2
@@ -81,7 +81,7 @@ opentelemetry-semantic-conventions==0.49b1
 opentelemetry-util-http==0.49b1
 orjson==3.10.11
 overrides==7.7.0
-packaging==24.2
+packaging==23.2
 pandas==2.2.3
 pillow==11.0.0
 posthog==3.7.0
@@ -118,7 +118,7 @@ SQLAlchemy==2.0.35
 starlette==0.41.2
 streamlit==1.40.0
 sympy==1.13.3
-tenacity==9.0.0
+tenacity==8.5.0
 tokenizers==0.20.3
 toml==0.10.2
 tomli==2.0.2
