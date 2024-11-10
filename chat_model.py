@@ -36,10 +36,8 @@ def load_chat_model(model_name="llama3"):
     if not model_name:
         print("Empty model to load!")
         pass
-    elif model_name != "llama3" or model_name == "llama3.2":
-        print("Unsupported model " + model_name)
-        pass
     # TODO: Support multiple models
+    print(f"Used Ollama model: {model_name}")
     chat_model = OllamaLLM(model=model_name)
     return chat_model
 
