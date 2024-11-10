@@ -24,7 +24,7 @@ def get_llm_response(query, user_options={}):
     chat_chain = (
         {"context": retriever, "query": RunnablePassthrough()}
         | chat_model.compose_llm_prompt(user_options["system_prompt"])
-        | chat_model.load_chat_model()
+        | chat_model.load_chat_model(model_name=user_options["llm"])
         | StrOutputParser()
     )
     answer = chat_chain.invoke(query)
@@ -47,7 +47,7 @@ def get_llm_response_chat(query, user_options={}, chat_history=[]):
     num_tokens_to_consider = 3
     retriever = vector_db.as_retriever(k=num_tokens_to_consider)
 
-    llm_model = chat_model.load_chat_model()
+    llm_model = chat_model.load_chat_model(model_name=user_options["llm"])
     contextualizer = chat_model.contextualize_system_prompt(llm_model, retriever)
     qa_chain = chat_model.create_question_answer_chain(
         llm_model, user_options["system_prompt"]
