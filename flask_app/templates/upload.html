@@ -44,7 +44,13 @@
 
     <label for="input_text">System prompt:</label>
     <input type="text" id="input_text" name="system_prompt" required>
-    <div></div>
+
+    <label for="selection_llm">LLM:</label>
+    <select name="selection_llm" id="selection_llm">
+        <option value="llama3">llama3</option>
+        <option value="llama32">llama3.2</option>
+    </select>
+
     <button onclick="startEasyrag()">Start Easyrag</button>
 
     <script>
@@ -86,7 +92,8 @@
                 url: '/run-easyrag',
                 type: 'POST',
                 data: JSON.stringify({
-                    'system-prompt': $('#input_text').val()
+                    'system-prompt': $('#input_text').val(),
+                    'selected-llm': $('#selection_llm').val()
                 }),
                 contentType: "application/json",
                 dataType: 'json',

@@ -6,6 +6,8 @@ UPLOAD_FOLDER = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "uploaded_files"
 )
 ALLOWED_EXTENSIONS = {"pdf"}
+RAG_FOLDER_NAME = "chroma_data"
+DEFAULT_SYSTEM_PROMPT = "You got some documents.\nReply to questions concerning them."
 
 easyrag_flask_app = Flask(__name__)
 easyrag_flask_app.config["SECRET_KEY"] = "supersecretkey"
@@ -54,7 +56,19 @@ def start_easyrag():
     else:
         return jsonify({"message": "Data from front-end is not JSON!"})
 
-    system_prompt = json_data.get("system-prompt", "")
+    user_options_flask = {}
+    user_options_flask["system_prompt"] = json_data.get(
+        "system-prompt", DEFAULT_SYSTEM_PROMPT
+    )
+    user_options_flask["llm"] = json_data.get("selected-llm", "")
+    user_options_flask["data_folder"] = UPLOAD_FOLDER
+    user_options_flask["rag_folder"] = os.path.join(
+        user_options_flask["data_folder"],
+        RAG_FOLDER_NAME + "_" + user_options_flask["llm"],
+    )
+    user_options_flask["use_web_interface"] = True  # hardcoded, needed since no GUI!
+    user_options_flask["consider_history"] = True  # hardcoded
+
     result = {"message": "Easyrag started!"}
     # TODO forward to back-end, the source folder for PDFs becomes ./uploaded_files
     return jsonify(result)
