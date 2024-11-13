@@ -55,6 +55,4 @@ def start_easyrag():
 
 
 if __name__ == "__main__":
-    if not os.path.exists(UPLOAD_FOLDER):
-        os.makedirs(UPLOAD_FOLDER)
     easyrag_flask_app.run(debug=True, port=3000)
