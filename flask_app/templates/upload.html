@@ -122,6 +122,7 @@
         <option value="llama3.2">llama3.2</option>
     </select>
 
+    <button onclick="downloadLLM()">Download model</button>
     <button onclick="startEasyrag()">Start Easyrag</button>
 </body>
 
@@ -185,6 +186,25 @@
         $.ajax({
             url: '/clear-data',
             type: 'POST',
+            success: function (response) {
+                alert(response.message)
+                window.location.href = response.nextpage;
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+
+    function downloadLLM() {
+        $.ajax({
+            url: '/download-llm',
+            type: 'POST',
+            data: JSON.stringify({
+                'selected-llm': $('#selection_llm').val()
+            }),
+            contentType: "application/json",
+            dataType: 'json',
             success: function (response) {
                 alert(response.message)
                 window.location.href = response.nextpage;

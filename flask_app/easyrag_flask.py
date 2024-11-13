@@ -7,6 +7,7 @@ import shutil
 curr_dir = os.path.dirname(__file__)
 root_dir = os.path.abspath(os.path.join(curr_dir, ".."))
 sys.path.append(root_dir)
+from ollama_manager import download_model
 import process_handler
 import streamlit_settings
 
@@ -115,6 +116,25 @@ def delete_files_on_server():
         elif os.path.isdir(file_path):
             shutil.rmtree(file_path)
     return {"nextpage": "/", "message": "Previously uploaded files have been deleted!"}
+
+
+@easyrag_flask_app.route("/download-llm", methods=["POST"])
+def download_llm():
+    content_type = request.headers.get("Content-Type")
+    if content_type == "application/json":
+        json_data = request.get_json()
+    else:
+        return jsonify({"message": "Data from front-end is not JSON!"})
+
+    llm_name = json_data.get("selected-llm", "")
+    success = download_model(llm_name)
+    if success:
+        return {"nextpage": "/", "message": f"Model {llm_name} has been downloaded!"}
+    else:
+        return {
+            "nextpage": "/",
+            "message": f"Error while downloading the model {llm_name}!",
+        }
 
 
 if __name__ == "__main__":
