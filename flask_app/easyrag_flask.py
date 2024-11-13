@@ -79,8 +79,18 @@ def start_easyrag():
     streamlit_cmd = "streamlit run " + streamlit_script
     streamlit_pid = process_handler.execute_command_and_get_pid(streamlit_cmd)
 
-    result = {"message": f"Easyrag started with PID {streamlit_pid}!"}
-    return jsonify(result)
+    return {"pid": streamlit_pid}
+
+
+@easyrag_flask_app.route("/streamlit-kill/<streamlit_pid>", methods=["GET", "POST"])
+def kill_streamlit(streamlit_pid):
+    if request.method == "POST":
+        if streamlit_pid.isnumeric():
+            streamlit_pid_num = int(streamlit_pid)
+            process_handler.kill_process_by_pid(streamlit_pid_num)
+        # coming back where all started...
+        return {"nextsite": "/"}
+    return render_template("streamlit_kill.html", pid=streamlit_pid)
 
 
 if __name__ == "__main__":

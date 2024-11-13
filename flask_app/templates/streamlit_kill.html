@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Streamlit Killer</title>
+    <style>
+        .button {
+            padding: 20px;
+            font-size: 24px;
+            background-color: #af564c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <button class="button" onclick="killStreamlit()">Kill Streamlit</button>
+
+    <script>
+        function killStreamlit() {
+            $.ajax({
+                url: '/streamlit-kill/{{ pid }}',
+                type: 'POST',
+                data: JSON.stringify({
+                    'streamlit-pid': "{{ pid }}",
+                }),
+                contentType: "application/json",
+                dataType: 'json',
+                success: function (response) {
+                    window.location.href = response.nextsite;
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
