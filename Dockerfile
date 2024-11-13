@@ -13,16 +13,20 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r dependencies/requirements.txt
 
 # port where the Streamlit engine will be available
-EXPOSE 8501
+EXPOSE 8501/udp
+EXPOSE 8501/tcp
 
 # port where the Flask application will be available
-EXPOSE 3000
+EXPOSE 3000/udp
+EXPOSE 3000/tcp
 
-# environment variable for Ollama
+# environment variables for Ollama
 ENV OLLAMA_HOST=0.0.0.0:11434
+ENV OLLAMA_ORIGINS=http://0.0.0.0:11434
 
 # port for API calls to Ollama
-EXPOSE 11434
+EXPOSE 11434/udp
+EXPOSE 11434/tcp
 
 ENTRYPOINT [ "python" ]
 CMD ["flask_app/easyrag_flask.py"]
