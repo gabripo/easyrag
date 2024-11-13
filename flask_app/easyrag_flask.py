@@ -1,10 +1,14 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from werkzeug.utils import secure_filename
+import sys
 
-UPLOAD_FOLDER = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "uploaded_files"
-)
+curr_dir = os.path.dirname(__file__)
+root_dir = os.path.abspath(os.path.join(curr_dir, ".."))
+sys.path.append(root_dir)
+import streamlit_settings
+
+UPLOAD_FOLDER = os.path.join(curr_dir, "uploaded_files")
 ALLOWED_EXTENSIONS = {"pdf"}
 RAG_FOLDER_NAME = "chroma_data"
 DEFAULT_SYSTEM_PROMPT = "You got some documents.\nReply to questions concerning them."
@@ -68,6 +72,8 @@ def start_easyrag():
     )
     user_options_flask["use_web_interface"] = True  # hardcoded, needed since no GUI!
     user_options_flask["consider_history"] = True  # hardcoded
+
+    streamlit_settings.write_streamlit_secrets(user_options_flask)
 
     result = {"message": "Easyrag started!"}
     # TODO forward to back-end, the source folder for PDFs becomes ./uploaded_files
