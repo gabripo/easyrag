@@ -6,6 +6,7 @@ import sys
 curr_dir = os.path.dirname(__file__)
 root_dir = os.path.abspath(os.path.join(curr_dir, ".."))
 sys.path.append(root_dir)
+import process_handler
 import streamlit_settings
 
 UPLOAD_FOLDER = os.path.join(curr_dir, "uploaded_files")
@@ -74,9 +75,11 @@ def start_easyrag():
     user_options_flask["consider_history"] = True  # hardcoded
 
     streamlit_settings.write_streamlit_secrets(user_options_flask)
+    streamlit_script = "web_interface_chat.py"
+    streamlit_cmd = "streamlit run " + streamlit_script
+    streamlit_pid = process_handler.execute_command_and_get_pid(streamlit_cmd)
 
-    result = {"message": "Easyrag started!"}
-    # TODO forward to back-end, the source folder for PDFs becomes ./uploaded_files
+    result = {"message": f"Easyrag started with PID {streamlit_pid}!"}
     return jsonify(result)
 
 
