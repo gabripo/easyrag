@@ -13,10 +13,6 @@ easyrag_flask_app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 easyrag_flask_app.config["ALLOWED_EXTENSIONS"] = ALLOWED_EXTENSIONS
 
 
-if not os.path.exists(easyrag_flask_app.config["UPLOAD_FOLDER"]):
-    os.makedirs(easyrag_flask_app.config["UPLOAD_FOLDER"])
-
-
 @easyrag_flask_app.route("/")
 def upload_file_form():
     return render_template("upload.html")
@@ -26,6 +22,9 @@ def upload_file_form():
 def upload_file():
     if "files[]" not in request.files:
         return redirect(request.url)
+
+    if not os.path.exists(easyrag_flask_app.config["UPLOAD_FOLDER"]):
+        os.makedirs(easyrag_flask_app.config["UPLOAD_FOLDER"])
 
     files = request.files.getlist("files[]")
 
