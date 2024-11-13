@@ -23,6 +23,7 @@
             color: #333;
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -40,6 +41,8 @@
         {% endfor %}
     </ul>
     {% endif %}
+
+    <button onclick="startEasyrag()">Start Easyrag</button>
 
     <script>
         const uploadBox = document.getElementById('uploadBox');
@@ -74,6 +77,20 @@
                 uploadForm.submit();
             }
         });
+
+        function startEasyrag() {
+            $.ajax({
+                url: '/run-easyrag',
+                type: 'POST',
+                success: function (response) {
+                    alert(response.message);
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+
     </script>
 
 </body>

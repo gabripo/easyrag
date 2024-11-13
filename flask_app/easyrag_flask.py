@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = os.path.join(
@@ -45,6 +45,13 @@ def upload_file():
             )
 
     return render_template("upload.html", message=success_msg_list)
+
+
+@easyrag_flask_app.route("/run-easyrag", methods=["POST"])
+def start_easyrag():
+    result = {"message": "Easyrag started!"}
+    # TODO forward to back-end, the source folder for PDFs becomes ./uploaded_files
+    return jsonify(result)
 
 
 if __name__ == "__main__":
