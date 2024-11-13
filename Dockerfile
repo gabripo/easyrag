@@ -18,5 +18,11 @@ EXPOSE 8501
 # port where the Flask application will be available
 EXPOSE 3000
 
+# environment variable for Ollama
+ENV OLLAMA_HOST=0.0.0.0:11434
+
+# port for API calls to Ollama
+EXPOSE 11434
+
 ENTRYPOINT [ "python" ]
 CMD ["flask_app/easyrag_flask.py"]
