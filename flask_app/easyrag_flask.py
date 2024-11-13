@@ -48,6 +48,13 @@ def upload_file():
 
 @easyrag_flask_app.route("/run-easyrag", methods=["POST"])
 def start_easyrag():
+    content_type = request.headers.get("Content-Type")
+    if content_type == "application/json":
+        json_data = request.get_json()
+    else:
+        return jsonify({"message": "Data from front-end is not JSON!"})
+
+    system_prompt = json_data.get("system-prompt", "")
     result = {"message": "Easyrag started!"}
     # TODO forward to back-end, the source folder for PDFs becomes ./uploaded_files
     return jsonify(result)

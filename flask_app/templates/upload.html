@@ -42,6 +42,9 @@
     </ul>
     {% endif %}
 
+    <label for="input_text">System prompt:</label>
+    <input type="text" id="input_text" name="system_prompt" required>
+    <div></div>
     <button onclick="startEasyrag()">Start Easyrag</button>
 
     <script>
@@ -82,6 +85,11 @@
             $.ajax({
                 url: '/run-easyrag',
                 type: 'POST',
+                data: JSON.stringify({
+                    'system-prompt': $('#input_text').val()
+                }),
+                contentType: "application/json",
+                dataType: 'json',
                 success: function (response) {
                     alert(response.message);
                 },
