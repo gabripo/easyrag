@@ -3,8 +3,7 @@ import database_manager
 import chat_model
 from langchain.schema.runnable import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
-import requests
-import json
+from ollama_manager import is_llm_available
 
 
 def get_llm_response(query, user_options={}):
@@ -66,13 +65,3 @@ def get_llm_response_chat(query, user_options={}, chat_history=[]):
         return {
             "answer": f"Model {llm_name} is not available! Install it with Ollama before running Easyrag.\n"
         }
-
-
-def is_llm_available(llm_name: str) -> bool:
-    api_url = "http://localhost:11434/api/generate"
-    headers = {"Content-Type": "application/json"}
-    data = {"model": llm_name, "prompt": "Hello!", "stream": False}
-    response = requests.post(api_url, headers=headers, data=json.dumps(data))
-    if response.status_code == 200:
-        return True
-    return False
