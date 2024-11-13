@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Upload PDFs</title>
+    <style>
+        .upload-box {
+            width: 300px;
+            height: 200px;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            text-align: center;
+            line-height: 200px;
+            font-size: 16px;
+            color: #aaa;
+            margin: 20px auto;
+            cursor: pointer;
+        }
+
+        .upload-box.dragover {
+            border-color: #333;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Upload PDF Files</h1>
+    <div id="uploadBox" class="upload-box">Drag & Drop PDFs Here</div>
+    <form id="uploadForm" action="{{ url_for('upload_file') }}" method="POST" enctype="multipart/form-data"
+        style="display: none;">
+        <input id="fileInput" type="file" multiple name="files[]" accept="application/pdf">
+        <input type="submit" value="Upload">
+    </form>
+    {% if message %}
+    <ul>
+        {% for msg in message %}
+        <li>{{ msg }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <script>
+        const uploadBox = document.getElementById('uploadBox');
+        const fileInput = document.getElementById('fileInput');
+        const uploadForm = document.getElementById('uploadForm');
+
+        uploadBox.addEventListener('click', () => fileInput.click());
+
+        uploadBox.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadBox.classList.add('dragover');
+        });
+
+        uploadBox.addEventListener('dragleave', () => {
+            uploadBox.classList.remove('dragover');
+        });
+
+        uploadBox.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadBox.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                uploadForm.method = 'POST';
+                uploadForm.submit();
+            }
+        });
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                uploadForm.method = 'POST';
+                uploadForm.submit();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

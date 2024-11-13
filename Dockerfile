@@ -14,4 +14,7 @@ RUN pip install --no-cache-dir -r dependencies/requirements.txt
 # port where the Streamlit engine will be available
 EXPOSE 8501
 
-CMD python main.py
+# port where the Flask application will be available
+EXPOSE 5000
+
+CMD python flask_app/easyrag_flask.py
