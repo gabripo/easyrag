@@ -172,7 +172,7 @@
             contentType: "application/json",
             dataType: 'json',
             success: function (response) {
-                window.location.href = '/streamlit-kill/' + response.pid;
+                window.location.href = response.nextpage;
             },
             error: function (error) {
                 console.error('Error:', error);

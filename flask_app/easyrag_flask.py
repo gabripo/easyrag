@@ -74,12 +74,24 @@ def start_easyrag():
     user_options_flask["use_web_interface"] = True  # hardcoded, needed since no GUI!
     user_options_flask["consider_history"] = True  # hardcoded
 
+    data_folder_content = os.listdir(user_options_flask["data_folder"])
+    data_folder_files = [
+        file
+        for file in data_folder_content
+        if os.path.isfile(os.path.join(user_options_flask["data_folder"], file))
+    ]
+    if len(data_folder_files) == 0:
+        # back to roots
+        data_folder = user_options_flask["data_folder"]
+        print(f"No valid files in folder {data_folder}!")
+        return {"nextpage": "/"}
+
     streamlit_settings.write_streamlit_secrets(user_options_flask)
     streamlit_script = "web_interface_chat.py"
     streamlit_cmd = "streamlit run " + streamlit_script
     streamlit_pid = process_handler.execute_command_and_get_pid(streamlit_cmd)
 
-    return {"pid": streamlit_pid}
+    return {"nextpage": f"/streamlit-kill/{streamlit_pid}"}
 
 
 @easyrag_flask_app.route("/streamlit-kill/<streamlit_pid>", methods=["GET", "POST"])
