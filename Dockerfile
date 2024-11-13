@@ -24,9 +24,5 @@ EXPOSE 3000/tcp
 ENV OLLAMA_HOST=0.0.0.0:11434
 ENV OLLAMA_ORIGINS=http://0.0.0.0:11434
 
-# port for API calls to Ollama
-EXPOSE 11434/udp
-EXPOSE 11434/tcp
-
 ENTRYPOINT [ "python" ]
 CMD ["flask_app/easyrag_flask.py"]

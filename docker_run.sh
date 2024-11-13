@@ -10,4 +10,4 @@ else
 fi
 
 echo "Link to the project homepage: http://0.0.0.0:$HOST_PORT"
-docker run -p $HOST_PORT:3000 -p 8501:8501 -p 11434:11434 docker-easyrag
+docker run -p $HOST_PORT:3000 -p 8501:8501 docker-easyrag
