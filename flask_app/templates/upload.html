@@ -64,8 +64,7 @@
             margin-bottom: 10px;
         }
 
-        input[type="submit"],
-        button {
+        input[type="submit"] {
             background-color: #4a90e2;
             color: #fff;
             border: none;
@@ -75,9 +74,50 @@
             transition: background-color 0.3s ease;
         }
 
-        input[type="submit"]:hover,
-        button:hover {
+        input[type="submit"]:hover {
             background-color: #1a73e8;
+        }
+
+        .delete-button {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-button:hover {
+            background-color: #c0392b;
+        }
+
+        .download-button {
+            background-color: #f39c12;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-button:hover {
+            background-color: #e67e22;
+        }
+
+        .start-button {
+            background-color: #2ecc71;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .start-button:hover {
+            background-color: #27ae60;
         }
 
         ul {
@@ -111,7 +151,7 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <button onclick="deleteFilesOnServer()">Delete all files</button>
+    <button class="delete-button" onclick="deleteFilesOnServer()">Delete all files</button>
 
     <label for="input_text">System prompt:</label>
     <input type="text" id="input_text" name="system_prompt" required>
@@ -122,11 +162,12 @@
         <option value="llama3.2">llama3.2</option>
     </select>
 
-    <button onclick="downloadLLM()">Download model</button>
-    <button onclick="startEasyrag()">Start Easyrag</button>
+    <button class="download-button" onclick="downloadLLM()">Download model</button>
+    <button class="start-button" onclick="startEasyrag()">Start Easyrag</button>
 </body>
 
 </html>
+
 
 
 <script>
