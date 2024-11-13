@@ -3,31 +3,101 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Upload PDFs</title>
+    <title>Easyrag Web Interface - Upload PDFs</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fc;
+            color: #333;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #4a90e2;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
         .upload-box {
             width: 300px;
             height: 200px;
-            border: 2px dashed #ccc;
+            border: 2px dashed #4a90e2;
             border-radius: 10px;
             text-align: center;
-            line-height: 200px;
+            line-height: 180px;
             font-size: 16px;
-            color: #aaa;
+            color: #4a90e2;
+            background-color: #fff;
             margin: 20px auto;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .upload-box.dragover {
-            border-color: #333;
-            color: #333;
+            border-color: #1a73e8;
+            color: #1a73e8;
+            background-color: #eaf2fd;
+        }
+
+        .upload-box:hover {
+            border-color: #1a73e8;
+            color: #1a73e8;
+            background-color: #f1f7ff;
+        }
+
+        label,
+        select,
+        input {
+            display: block;
+            margin: 10px auto;
+            font-size: 16px;
+            color: #555;
+        }
+
+        input[type="text"],
+        select {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"],
+        button {
+            background-color: #4a90e2;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover,
+        button:hover {
+            background-color: #1a73e8;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #eaf2fd;
+            color: #4a90e2;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-    <h1>Upload PDF Files</h1>
+    <h1>Easyrag - Upload PDF Files, RAG'em!</h1>
     <div id="uploadBox" class="upload-box">Drag & Drop PDFs Here</div>
     <form id="uploadForm" action="{{ url_for('upload_file') }}" method="POST" enctype="multipart/form-data"
         style="display: none;">
@@ -52,61 +122,65 @@
     </select>
 
     <button onclick="startEasyrag()">Start Easyrag</button>
+</body>
 
-    <script>
-        const uploadBox = document.getElementById('uploadBox');
-        const fileInput = document.getElementById('fileInput');
-        const uploadForm = document.getElementById('uploadForm');
+</html>
 
-        uploadBox.addEventListener('click', () => fileInput.click());
 
-        uploadBox.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadBox.classList.add('dragover');
-        });
+<script>
+    const uploadBox = document.getElementById('uploadBox');
+    const fileInput = document.getElementById('fileInput');
+    const uploadForm = document.getElementById('uploadForm');
 
-        uploadBox.addEventListener('dragleave', () => {
-            uploadBox.classList.remove('dragover');
-        });
+    uploadBox.addEventListener('click', () => fileInput.click());
 
-        uploadBox.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadBox.classList.remove('dragover');
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                fileInput.files = files;
-                uploadForm.method = 'POST';
-                uploadForm.submit();
-            }
-        });
+    uploadBox.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadBox.classList.add('dragover');
+    });
 
-        fileInput.addEventListener('change', () => {
-            if (fileInput.files.length > 0) {
-                uploadForm.method = 'POST';
-                uploadForm.submit();
-            }
-        });
+    uploadBox.addEventListener('dragleave', () => {
+        uploadBox.classList.remove('dragover');
+    });
 
-        function startEasyrag() {
-            $.ajax({
-                url: '/run-easyrag',
-                type: 'POST',
-                data: JSON.stringify({
-                    'system-prompt': $('#input_text').val(),
-                    'selected-llm': $('#selection_llm').val()
-                }),
-                contentType: "application/json",
-                dataType: 'json',
-                success: function (response) {
-                    window.location.href = '/streamlit-kill/' + response.pid;
-                },
-                error: function (error) {
-                    console.error('Error:', error);
-                }
-            });
+    uploadBox.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadBox.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            fileInput.files = files;
+            uploadForm.method = 'POST';
+            uploadForm.submit();
         }
+    });
 
-    </script>
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files.length > 0) {
+            uploadForm.method = 'POST';
+            uploadForm.submit();
+        }
+    });
+
+    function startEasyrag() {
+        $.ajax({
+            url: '/run-easyrag',
+            type: 'POST',
+            data: JSON.stringify({
+                'system-prompt': $('#input_text').val(),
+                'selected-llm': $('#selection_llm').val()
+            }),
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (response) {
+                window.location.href = '/streamlit-kill/' + response.pid;
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+
+</script>
 
 </body>
 
