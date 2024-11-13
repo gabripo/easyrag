@@ -55,4 +55,5 @@ def start_easyrag():
 
 
 if __name__ == "__main__":
-    easyrag_flask_app.run(debug=True, port=3000)
+    port = int(os.environ.get("PORT", 3000))
+    easyrag_flask_app.run(debug=True, host="0.0.0.0", port=port)

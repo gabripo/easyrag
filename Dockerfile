@@ -18,4 +18,5 @@ EXPOSE 8501
 # port where the Flask application will be available
 EXPOSE 3000
 
-CMD ["python", "flask_app/easyrag_flask.py"]
+ENTRYPOINT [ "python" ]
+CMD ["flask_app/easyrag_flask.py"]

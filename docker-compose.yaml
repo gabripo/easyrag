@@ -1,0 +1,14 @@
+services:
+  ollama:
+    build: ./ollama
+    ports:
+      - "11434:11434"
+
+  easyrag:
+    container_name: docker-easyrag
+    build: .
+    links:
+      - ollama
+    ports:
+      - "8501:8501" # streamlit
+      - "3000:3000" # flask

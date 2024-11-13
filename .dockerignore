@@ -1,0 +1,5 @@
+__pycache__/
+.streamlit
+env/
+example_data/
+flask_app/uploaded_files
