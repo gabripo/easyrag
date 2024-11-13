@@ -11,14 +11,11 @@ from langchain_community.embeddings import OllamaEmbeddings
 def build_database(
     docs_path="", model_name="llama3", db_folder_path="", persistent_db=True
 ) -> Chroma:
-    if not docs_path:
-        print("Unspecified documents path!")
-        pass
     if model_name == "llama3" or model_name == "llama3.2":
         embedding_model_function = OllamaEmbeddings(model=model_name)
     else:
         print("Unsupported model " + model_name)
-        pass
+        return
     if not db_folder_path:
         db_folder_path = os.path.join(docs_path, f"chroma_data_{model_name}")
 
