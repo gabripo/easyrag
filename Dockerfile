@@ -6,6 +6,7 @@ WORKDIR ${DockerHOME}
 
 # copy the whole project into the docker directory
 COPY . $DockerHOME
+RUN ls -l
 
 # install dependencies
 RUN pip install --upgrade pip
@@ -15,6 +16,6 @@ RUN pip install --no-cache-dir -r dependencies/requirements.txt
 EXPOSE 8501
 
 # port where the Flask application will be available
-EXPOSE 5000
+EXPOSE 3000
 
-CMD python flask_app/easyrag_flask.py
+CMD ["python", "flask_app/easyrag_flask.py"]
