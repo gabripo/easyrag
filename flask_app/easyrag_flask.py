@@ -9,7 +9,7 @@ sys.path.append(root_dir)
 import process_handler
 import streamlit_settings
 
-UPLOAD_FOLDER = os.path.join(curr_dir, "uploaded_files")
+UPLOAD_FOLDER = os.path.abspath(os.path.join(curr_dir, "uploaded_files"))
 ALLOWED_EXTENSIONS = {"pdf"}
 RAG_FOLDER_NAME = "chroma_data"
 DEFAULT_SYSTEM_PROMPT = "You got some documents.\nReply to questions concerning them."
@@ -18,6 +18,9 @@ easyrag_flask_app = Flask(__name__)
 easyrag_flask_app.config["SECRET_KEY"] = "supersecretkey"
 easyrag_flask_app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 easyrag_flask_app.config["ALLOWED_EXTENSIONS"] = ALLOWED_EXTENSIONS
+
+if not os.path.exists(easyrag_flask_app.config["UPLOAD_FOLDER"]):
+    os.makedirs(easyrag_flask_app.config["UPLOAD_FOLDER"])
 
 
 @easyrag_flask_app.route("/")
@@ -29,9 +32,6 @@ def upload_file_form():
 def upload_file():
     if "files[]" not in request.files:
         return redirect(request.url)
-
-    if not os.path.exists(easyrag_flask_app.config["UPLOAD_FOLDER"]):
-        os.makedirs(easyrag_flask_app.config["UPLOAD_FOLDER"])
 
     files = request.files.getlist("files[]")
 
