@@ -111,6 +111,7 @@
         {% endfor %}
     </ul>
     {% endif %}
+    <button onclick="deleteFilesOnServer()">Delete all files</button>
 
     <label for="input_text">System prompt:</label>
     <input type="text" id="input_text" name="system_prompt" required>
@@ -172,6 +173,20 @@
             contentType: "application/json",
             dataType: 'json',
             success: function (response) {
+                window.location.href = response.nextpage;
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+
+    function deleteFilesOnServer() {
+        $.ajax({
+            url: '/clear-data',
+            type: 'POST',
+            success: function (response) {
+                alert(response.message)
                 window.location.href = response.nextpage;
             },
             error: function (error) {

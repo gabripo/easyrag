@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from werkzeug.utils import secure_filename
 import sys
+import shutil
 
 curr_dir = os.path.dirname(__file__)
 root_dir = os.path.abspath(os.path.join(curr_dir, ".."))
@@ -103,6 +104,17 @@ def kill_streamlit(streamlit_pid):
         # coming back where all started...
         return {"nextsite": "/"}
     return render_template("streamlit_kill.html", pid=streamlit_pid)
+
+
+@easyrag_flask_app.route("/clear-data", methods=["POST"])
+def delete_files_on_server():
+    for file in os.listdir(UPLOAD_FOLDER):
+        file_path = os.path.join(UPLOAD_FOLDER, file)
+        if os.path.isfile(file_path):
+            os.unlink(file_path)
+        elif os.path.isdir(file_path):
+            shutil.rmtree(file_path)
+    return {"nextpage": "/", "message": "Previously uploaded files have been deleted!"}
 
 
 if __name__ == "__main__":
