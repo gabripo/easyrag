@@ -25,5 +25,12 @@ EXPOSE 3000/tcp
 ENV APP_IN_DOCKER=Yes
 ENV OLLAMA_API_ENDPOINT_HOST=host.docker.internal
 
+# patch the langchain framework with the correct api endpoint
+COPY patch_langchain_api_endpoint.sh /usr/local/bin/patch_langchain_api_endpoint.sh
+RUN chmod +x /usr/local/bin/patch_langchain_api_endpoint.sh
+RUN sh /usr/local/bin/patch_langchain_api_endpoint.sh http://localhost:11434 http://${OLLAMA_API_ENDPOINT_HOST}:11434 /usr/local/lib/python3.10/site-packages/langchain_community/embeddings/ollama.py
+RUN sh /usr/local/bin/patch_langchain_api_endpoint.sh http://localhost:11434 http://${OLLAMA_API_ENDPOINT_HOST}:11434 /usr/local/lib/python3.10/site-packages/langchain_community/llms/ollama.py
+
+
 ENTRYPOINT [ "python" ]
 CMD ["flask_app/easyrag_flask.py"]
