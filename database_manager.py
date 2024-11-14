@@ -6,6 +6,7 @@ from langchain_community.vectorstores import Chroma
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import OllamaEmbeddings
+from ollama_manager import ollama_api_base_url
 
 
 def build_database(
@@ -13,6 +14,7 @@ def build_database(
 ) -> Chroma:
     if model_name == "llama3" or model_name == "llama3.2":
         embedding_model_function = OllamaEmbeddings(model=model_name)
+        embedding_model_function.base_url = ollama_api_base_url()
     else:
         print("Unsupported model " + model_name)
         return

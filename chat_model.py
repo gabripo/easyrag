@@ -8,6 +8,7 @@ from langchain.prompts import (
 from langchain_community.llms import Ollama
 from langchain.chains import create_history_aware_retriever, create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
+from ollama_manager import ollama_api_base_url
 
 
 def compose_llm_prompt(sys_prompt="") -> ChatPromptTemplate:
@@ -37,8 +38,9 @@ def load_chat_model(model_name="llama3"):
         print("Empty model to load!")
         pass
     # TODO: Support multiple models
-    print(f"Used Ollama model: {model_name}")
     chat_model = Ollama(model=model_name)
+    chat_model.base_url = ollama_api_base_url()
+    print(f"Used Ollama model: {model_name} with endpoint {chat_model.base_url}")
     return chat_model
 
 
