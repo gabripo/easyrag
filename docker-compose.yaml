@@ -10,3 +10,6 @@ services:
     ports:
       - "8501:8501" # streamlit
       - "3000:3000" # flask
+    environment:
+      - APP_IN_DOCKER_COMPOSE=Yes
+      - OLLAMA_API_ENDPOINT_CONTAINER=ollama

@@ -20,5 +20,10 @@ EXPOSE 8501/tcp
 EXPOSE 3000/udp
 EXPOSE 3000/tcp
 
+# environment variables to access ollama from the container
+# host.docker.internal is the name of the host machine
+ENV APP_IN_DOCKER=Yes
+ENV OLLAMA_API_ENDPOINT_HOST=host.docker.internal
+
 ENTRYPOINT [ "python" ]
 CMD ["flask_app/easyrag_flask.py"]
