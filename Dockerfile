@@ -20,9 +20,5 @@ EXPOSE 8501/tcp
 EXPOSE 3000/udp
 EXPOSE 3000/tcp
 
-# environment variables for Ollama
-ENV OLLAMA_HOST=0.0.0.0:11434
-ENV OLLAMA_ORIGINS=http://0.0.0.0:11434
-
 ENTRYPOINT [ "python" ]
 CMD ["flask_app/easyrag_flask.py"]
