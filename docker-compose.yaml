@@ -7,8 +7,6 @@ services:
   easyrag:
     container_name: docker-easyrag
     build: .
-    links:
-      - ollama
     ports:
       - "8501:8501" # streamlit
       - "3000:3000" # flask
