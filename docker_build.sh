@@ -1,3 +1,3 @@
 #! /bin/bash
 
-docker build . -t docker-easyrag
+docker build . -t easyrag-easyrag
