@@ -41,6 +41,13 @@ To stop using it and come back to the files uploading, click on "Kill Streamlit"
 
 <img width="1680" alt="Screenshot 2024-11-15 at 11 09 58" src="https://github.com/user-attachments/assets/6f698c70-b52c-43d5-b7ef-c0d60ff00185">
 
+#### Docker Compose 🎵
+Ollama can be run from another Docker container by using [Docker Compose](https://docs.docker.com/compose/) : a configuration is already provided within the project and, to start it, run the command:
+```bash
+docker compose up
+```
+Please note that the performance of Ollama will be affected, as the GPU acceleration for the Ollama container is not enabled by default.
+
 ### Local GUI 🪟 (the old way, yet there)
 ### Installation from source
 1. Clone this repo
