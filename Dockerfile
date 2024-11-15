@@ -13,8 +13,9 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r dependencies/requirements.txt
 
 # port where the Streamlit engine will be available
-EXPOSE 8501/udp
-EXPOSE 8501/tcp
+ENV STREAMLIT_PORT=8501
+EXPOSE ${STREAMLIT_PORT}/udp
+EXPOSE ${STREAMLIT_PORT}/tcp
 
 # port where the Flask application will be available
 EXPOSE 3000/udp

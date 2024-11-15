@@ -4,6 +4,7 @@ import streamlit as st
 import process_handler
 import streamlit_settings
 from langchain_core.messages import HumanMessage
+import os
 
 if __name__ == "__main__":
     user_options = easyrag_gui.ui_get_options()
@@ -11,7 +12,7 @@ if __name__ == "__main__":
     if easyrag_gui.ui_check_options(user_options) and user_options["use_web_interface"]:
         streamlit_settings.write_streamlit_secrets(user_options)
         streamlit_script = "web_interface_chat.py"
-        streamlit_cmd = "streamlit run " + streamlit_script
+        streamlit_cmd = f"streamlit run --server.port {os.getenv('STREAMLIT_PORT', '8501')} " + streamlit_script
         streamlit_pid = process_handler.execute_command_and_get_pid(streamlit_cmd)
 
         while True:

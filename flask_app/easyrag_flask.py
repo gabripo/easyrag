@@ -90,7 +90,7 @@ def start_easyrag():
 
     streamlit_settings.write_streamlit_secrets(user_options_flask)
     streamlit_script = "web_interface_chat.py"
-    streamlit_cmd = "streamlit run " + streamlit_script
+    streamlit_cmd = f"streamlit run --server.port {os.getenv('STREAMLIT_PORT', '8501')} " + streamlit_script
     streamlit_pid = process_handler.execute_command_and_get_pid(streamlit_cmd)
 
     return {"nextpage": f"/streamlit-kill/{streamlit_pid}"}
