@@ -6,7 +6,9 @@ import signal
 def execute_command_and_get_pid(command):
     try:
         # Run the command in the background
-        process = subprocess.Popen(command, shell=True)
+        process = subprocess.Popen(
+            command, stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid
+        )
         # Get the PID of the just-executed command
         pid = process.pid
         return pid
@@ -17,10 +19,10 @@ def execute_command_and_get_pid(command):
 
 def kill_process_by_pid(pid):
     try:
-        os.kill(pid, signal.SIGTERM)  # or signal.SIGKILL for forceful termination
+        os.killpg(os.getpgid(pid), signal.SIGTERM)
         print(f"Process with PID {pid} terminated successfully.")
     except ProcessLookupError:
-        print(f"No process found with PID {pid}.")
+        print(f"Impossible to kill process with PID {pid}.")
 
 
 def execute_command_and_wait(command):
