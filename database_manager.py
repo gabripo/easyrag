@@ -12,7 +12,8 @@ from ollama_manager import ollama_api_base_url
 def build_database(
     docs_path="", model_name="llama3", db_folder_path="", persistent_db=True
 ) -> Chroma:
-    if model_name == "llama3" or model_name == "llama3.2":
+    supported_models = {"llama3", "llama3.2", "deepseek-r1"}
+    if model_name in supported_models:
         embedding_model_function = OllamaEmbeddings(model=model_name)
         embedding_model_function.base_url = ollama_api_base_url()
     else:

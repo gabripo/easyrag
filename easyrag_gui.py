@@ -16,7 +16,7 @@ def ui_get_options() -> dict:
         ]
     )
 
-    supported_llms = ["llama3", "llama3.2"]
+    supported_llms = ["llama3", "llama3.2", "deepseek-r1"]
     default_llm = "llama3"
     llm_column = sg.Column(
         [
